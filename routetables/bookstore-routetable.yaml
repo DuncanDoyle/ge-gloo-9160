@@ -1,0 +1,18 @@
+apiVersion: gateway.solo.io/v1
+kind: RouteTable
+metadata:
+  name: bookstore-routes
+  namespace: gloo-system
+spec:
+  routes:
+    - matchers:
+      # the path matchers in this RouteTable must begin with the prefix `/a/`
+      - prefix: /
+      routeAction:
+        single:
+          upstream:
+            name: grpc-bookstore-8080
+            namespace: gloo-system
+      # options:
+      #   prefixRewrite: /
+    

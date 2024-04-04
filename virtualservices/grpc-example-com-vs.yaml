@@ -1,0 +1,42 @@
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: grpc-example-com-vs
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+    - 'grpc.example.com'
+    routes:
+    - matchers:
+      - prefix: /
+      # routeAction:
+      #   single:
+      #     upstream:
+      #       name: default-bookstore-8080
+      #       namespace: gloo-system
+      delegateAction:
+        ref:
+          name: bookstore-routes
+          namespace: gloo-system
+    #   # options:
+    #   #   prefixRewrite: /
+      
+    # # options:
+    # #   extauth:
+    # #     configRef:
+    # #       name: oauth-auth
+    # #       namespace: gloo-system
+    # - matchers:
+    #   - prefix: /fips
+    #   # delegateAction:
+    #   #   ref:
+    #   #     name: fips-routes
+    #   #     namespace: gloo-system
+    #   routeAction:
+    #     single:
+    #       upstream:
+    #         name: fips
+    #         namespace: default
+    #   # options:
+    #   #   prefixRewrite: /

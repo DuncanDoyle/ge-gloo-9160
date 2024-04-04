@@ -1,0 +1,16 @@
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: wtf-service-v1-http-to-https
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+    - wtf.example.com
+    routes:
+    - matchers:
+      - prefix: /what
+      - prefix: /the
+      - prefix: /f
+      redirectAction:
+        httpsRedirect: true

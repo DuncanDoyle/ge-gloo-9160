@@ -1,0 +1,15 @@
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: grpc-bookstore-8080
+  namespace: gloo-system
+spec:
+  discoveryMetadata:
+    labels:
+      app: bookstore
+  kube:
+    selector:
+      app: bookstore
+    serviceName: bookstore
+    serviceNamespace: default
+  useHttp2: true
