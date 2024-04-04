@@ -111,25 +111,19 @@ Check the `bookstore-routetable` again, and notice that the error is gone:
 kubectl -n gloo-system get rt bookstore-routes -o yaml
 ```
 
+> [!NOTE]
+> Sometimes the routetable status does not update after a change in the Upstream. You can trigger a status update by simply adding a random label to, for example, one of the virtualservices:
+> ```
+> kubectl -n gloo-system label vs wtf-service-v1-http-to-https --overwrite random=value
+> ```
+
 Apply the Upstream with `grpcJsonTranscoder` again:
 
 ```
 kubectl apply -f upstreams/bookstore-upstream.yaml 
 ```
 
-...... and now ... notice the `bookstore-routetable` does not show an error:
-
-```
-kubectl -n gloo-system get rt bookstore-routes -o yaml
-```
-
-.... until ..... we make a slight change in our virtualservice, for example, applying a label:
-
-```
-kubectl -n gloo-system label vs wtf-service-v1-http-to-https random=value
-```
-
-And now .... our `bookstore-routetable` shows the error again:
+and notice the `bookstore-routetable` shows the error again (if the error is not shown, apply another random label to the virtualservice to trigger the update):
 
 ```
 kubectl -n gloo-system get rt bookstore-routes -o yaml
